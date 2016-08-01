@@ -23,7 +23,14 @@ app.get('/survey', function(req, res){
 	res.sendfile(path.join(__dirname, 'app/public/survey.html'));
 })
 
+app.post('/api/friends', function(req,res){
+	var posted = req.body;
+	console.log(posted);
+})
+
+//lets the server recognize the js files
 app.use(express.static('app'));
+
 //starts the server with the listening queue
 app.listen(PORT, function(){
 	console.log("Listening on port", PORT);
