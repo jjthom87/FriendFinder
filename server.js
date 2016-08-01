@@ -23,6 +23,7 @@ app.get('/survey', function(req, res){
 	res.sendfile(path.join(__dirname, 'app/public/survey.html'));
 })
 
+app.use(express.static('app'));
 //starts the server with the listening queue
 app.listen(PORT, function(){
 	console.log("Listening on port", PORT);
