@@ -2,6 +2,7 @@
 var express = require ('express');
 var bodyParser = require('body-parser');
 var path = require('path');
+var fs = require('fs');
 
 //Sets up the the express app
 var app = express();
@@ -21,11 +22,42 @@ app.get('/', function(reckor,resin){
 //getting data from the survey.html file
 app.get('/survey', function(req, res){
 	res.sendfile(path.join(__dirname, 'app/public/survey.html'));
-})
+});
 
 app.post('/api/friends', function(req,res){
-	var posted = req.body;
-	console.log(posted);
+	var friendName = req.body.friend.name;
+	var friendImage = req.body.friend.image;
+	var friendNumbers = req.body.friend.selections;
+	var input = '';
+	// function loop(array){
+	// 	for (var i = 0; i < array.length; i++) {
+	// 		console.log(array[i]);
+	// 	}
+	// }
+	var newFriend = {
+		name: friendName,
+		image: friendImage,
+		selections: friendNumbers
+		};
+		console.log(friendNumbers);
+	var stringifyFriend = JSON.stringify(newFriend);
+
+	fs.appendFile('post.txt', stringifyFriend + "\n" , function(err){
+		if (err) {
+			res.send('Problem is ' + err);
+		} else {
+			res.send('Saved');
+		}
+	})
+});
+
+app.get('/api/friends', function(req,res){
+	// var sum = 0;
+	// var numbers = req.query.friend.selections;
+	// for (var i = 0; i < numbers.length; i++) {
+	// 	var parsedNumbers = parseInt(numbers[i]);
+	// 	sum += parsedNumbers;
+	// }
 })
 
 //lets the server recognize the js files

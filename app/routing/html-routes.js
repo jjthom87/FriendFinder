@@ -10,7 +10,7 @@ $(document).ready(function() {
 
 	$('#surveyForm').on('submit', function(){
 		$.post("http://localhost:8000/api/friends",{friend})
-		console.log(friend);
+		$.get("http://localhost:8000/api/friends",{friend})
 	})
 
 	//hiding the survey to input additional information
