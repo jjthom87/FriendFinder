@@ -3,6 +3,7 @@ var express = require ('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 var fs = require('fs');
+var friendArray = [];
 
 //Sets up the the express app
 var app = express();
@@ -24,41 +25,49 @@ app.get('/survey', function(req, res){
 	res.sendfile(path.join(__dirname, 'app/public/survey.html'));
 });
 
+app.get('/api/friends', function(req,res){
+	res.json(friendArray);
+})
+
+// app.get('/api/friends/:index', function(req,res){
+// 	// var sum = 0;
+// 	// var numbers = req.query.friend.selections;
+// 	// for (var i = 0; i < numbers.length; i++) {
+// 	// 	var parsedNumbers = parseInt(numbers[i]);
+// 	// 	sum += parsedNumbers;
+// 	// }
+// 	console.log(req.params.index)
+// })
+
 app.post('/api/friends', function(req,res){
 	var friendName = req.body.friend.name;
 	var friendImage = req.body.friend.image;
-	var friendNumbers = req.body.friend.selections;
-	var input = '';
-	// function loop(array){
-	// 	for (var i = 0; i < array.length; i++) {
-	// 		console.log(array[i]);
-	// 	}
-	// }
+	var friendStringNumbers = req.body.friend.selections;
+	function stringToNumber(array){
+			for (var i = 0; i < array.length; i++) {
+				array[i] = parseInt(array[i]);
+			}
+			return array	
+		}
+	var friendNumbers = stringToNumber(friendStringNumbers);
 	var newFriend = {
-		name: friendName,
+	  	name: friendName,
 		image: friendImage,
 		selections: friendNumbers
-		};
-		console.log(friendNumbers);
-	var stringifyFriend = JSON.stringify(newFriend);
-
-	fs.appendFile('post.txt', stringifyFriend + "\n" , function(err){
-		if (err) {
-			res.send('Problem is ' + err);
-		} else {
-			res.send('Saved');
 		}
-	})
-});
+		friendArray.push(newFriend);
+		res.json(newFriend);
 
-app.get('/api/friends', function(req,res){
-	// var sum = 0;
-	// var numbers = req.query.friend.selections;
-	// for (var i = 0; i < numbers.length; i++) {
-	// 	var parsedNumbers = parseInt(numbers[i]);
-	// 	sum += parsedNumbers;
-	// }
-})
+	// var stringifyFriend = JSON.stringify(newFriend);
+
+// 	fs.appendFile('post.txt', newFriend + "\n" , function(err){
+// 		if (err) {
+// 			res.send('Problem is ' + err);
+// 		} else {
+// 			res.send('Saved');
+// 		}
+// 	})
+});
 
 //lets the server recognize the js files
 app.use(express.static('app'));

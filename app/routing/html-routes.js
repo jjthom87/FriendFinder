@@ -8,10 +8,18 @@ $(document).ready(function() {
 
 	var friend = new NewFriend();
 
-	$('#surveyForm').on('submit', function(){
+	$('#surveyForm').on('submit', function(event){
+		event.preventDefault();
+		$('#myModal').modal();
+
 		$.post("http://localhost:8000/api/friends",{friend})
 		$.get("http://localhost:8000/api/friends",{friend})
-	})
+	});
+
+	// function hideThis(){
+	// 	$('#surveyDiv').hide();
+	// 	$('.matchDiv').show();
+	// }
 
 	//hiding the survey to input additional information
 	$('.survey').hide();
@@ -77,7 +85,7 @@ $(document).ready(function() {
 			$('.survey').hide();
 			$('#submitButton').show();
 			var newDiv2 = $('<div>');
-			var final = $('<h2>Thank You For Taking This Survey. Please Press Submit Button To Complete</h2>');
+			var final = $('<h2>Thank You For Taking This Survey. Please Press Submit Button To Meet Your Match</h2>');
 			newDiv2.append(final);
 			$('.thankYou').append(newDiv2);
 		}
