@@ -4,14 +4,18 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var fs = require('fs');
 var friendArray = [];
+// var photoArray = [];
 
 //Sets up the the express app
 var app = express();
 var PORT = 8000;
 
 //Sets up the express app to handle parsing
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true}));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({ 
+	limit: '50mb',
+	extended: true, 
+	parameterLimit:50000}));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/vnd.api+json'}));
 
@@ -27,22 +31,14 @@ app.get('/survey', function(req, res){
 
 app.get('/api/friends', function(req,res){
 	res.json(friendArray);
+	// res.json(photoArray);
 })
-
-// app.get('/api/friends/:index', function(req,res){
-// 	// var sum = 0;
-// 	// var numbers = req.query.friend.selections;
-// 	// for (var i = 0; i < numbers.length; i++) {
-// 	// 	var parsedNumbers = parseInt(numbers[i]);
-// 	// 	sum += parsedNumbers;
-// 	// }
-// 	console.log(req.params.index)
-// })
 
 app.post('/api/friends', function(req,res){
 	var friendName = req.body.friend.name;
 	var friendImage = req.body.friend.image;
 	var friendStringNumbers = req.body.friend.selections;
+	var friendPhoto = req.body.friend.photo;
 	function stringToNumber(array){
 			for (var i = 0; i < array.length; i++) {
 				array[i] = parseInt(array[i]);
@@ -53,21 +49,14 @@ app.post('/api/friends', function(req,res){
 	var newFriend = {
 	  	name: friendName,
 		image: friendImage,
-		selections: friendNumbers
+		selections: friendNumbers,
+		photo: friendPhoto
 		}
 		friendArray.push(newFriend);
 		res.json(newFriend);
 
-	// var stringifyFriend = JSON.stringify(newFriend);
-
-// 	fs.appendFile('post.txt', newFriend + "\n" , function(err){
-// 		if (err) {
-// 			res.send('Problem is ' + err);
-// 		} else {
-// 			res.send('Saved');
-// 		}
-// 	})
-});
+		// photoArray.push(req.body.friend.photo);
+	});
 
 //lets the server recognize the js files
 app.use(express.static('app'));

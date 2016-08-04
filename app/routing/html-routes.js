@@ -1,21 +1,101 @@
 $(document).ready(function() {
 
+
 	function NewFriend(){
 		this.name = '';
 		this.image = '';
 		this.selections = [];
+		this.photo = '';
 	}
 
+	function GetPhoto(){
+		this.photo = $('<img>')
+	}
+
+function MatchMaker(){
+	this.c = [];
+	this.count = 0;
+	this.sum = 0;
+	this.index = function(array,arrays){
+		if (this.c.length < arrays.length){
+			for (var i = 0; i < array.length; i++){
+				this.sum += (array[i] - (arrays[this.count][i]));
+		}
+		this.c.push(this.sum);
+		this.count++;
+		this.index(array,arrays);
+		} else {
+			for(var j = 0; j < this.c.length; j++) {
+				if (this.c[j] < 0){
+				this.c[j] = this.c[j]*-1;
+				}
+			}
+			if (this.c.length === 1) {
+				alert("You are officially the first member. Your match will come");
+				} else {
+				this.c.sort(function(a,b){
+					return a === b ? 0 : a < b ? -1: 1
+				});
+			 	if (this.c.indexOf(this.c[0]) >-1){
+			 		
+			 	}
+			}
+		}
+	}
+};
+	var newMatch = new MatchMaker();
 	var friend = new NewFriend();
+	var photo = new GetPhoto();
 
-	$('#surveyForm').on('submit', function(event){
-		event.preventDefault();
+	$('#surveyForm').on('submit', function(e){
+		$('#submitHome').hide();
+
+		e.preventDefault();
 		$('#myModal').modal();
-
 		$.post("http://localhost:8000/api/friends",{friend})
-		$.get("http://localhost:8000/api/friends",{friend})
-	});
+		$.ajax({
+			type: "GET",
+			url: "http://localhost:8000/api/friends"
+		}).done(function(results){
+			selectionsArray = [];
+			var currentUserData = gettingLast(results);
+			var allOtherData = removingLast(results);
 
+		for(var i = 0; i < allOtherData.length; i++){
+			selectionsArray.push(allOtherData[i].selections); 
+		}
+
+		newMatch.index(currentUserData.selections, selectionsArray);
+
+			var matchDiv = $('<div>');
+
+			var matchP = $('<p>');
+			matchP.text(currentUserData.name);
+			matchDiv.append(matchP);
+
+			var matchImg = $('<img>');
+			matchImg.attr('src', currentUserData.photo).height(300).width(300);
+			matchDiv.append(matchImg);
+
+			$('.modal-body').append(matchDiv);
+			
+			$('#submitButton').hide();
+			$('#submitHome').show();
+		});
+});
+
+	function gettingLast(array){
+		for (var i = 0; i < array.length; i++){
+			var lastArray = array[array.length-1];
+			}
+		return lastArray;
+		};
+
+	function removingLast(array){
+		array.pop();
+		return array;
+	}
+ 
 	// function hideThis(){
 	// 	$('#surveyDiv').hide();
 	// 	$('.matchDiv').show();
@@ -39,9 +119,10 @@ $(document).ready(function() {
 
 	function imageIsLoaded(e) {
 		var imageDiv = $('<div>');
-		var image = $('<img>');
-		image.attr('src', e.target.result);
-		imageDiv.append(image);
+
+		friend.photo = e.target.result;
+		photo.photo.attr('src', e.target.result).height(300).width(300);
+		imageDiv.append(photo.photo);
 		$('.imageDiv').append(imageDiv);
 	};
 
