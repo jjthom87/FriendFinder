@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-
 	function NewFriend(){
 		this.name = '';
 		this.image = '';
@@ -12,38 +11,14 @@ $(document).ready(function() {
 		this.photo = $('<img>')
 	}
 
-function MatchMaker(){
-	this.c = [];
-	this.count = 0;
-	this.sum = 0;
-	this.index = function(array,arrays){
-		if (this.c.length < arrays.length){
-			for (var i = 0; i < array.length; i++){
-				this.sum += (array[i] - (arrays[this.count][i]));
+	function indexOfSmallest(a){
+		var lowest = 0;
+		for (var i = 1; i < a.length; i++){
+			if(a[i] < a[lowest]) lowest = i;
 		}
-		this.c.push(this.sum);
-		this.count++;
-		this.index(array,arrays);
-		} else {
-			for(var j = 0; j < this.c.length; j++) {
-				if (this.c[j] < 0){
-				this.c[j] = this.c[j]*-1;
-				}
-			}
-			if (this.c.length === 1) {
-				alert("You are officially the first member. Your match will come");
-				} else {
-				this.c.sort(function(a,b){
-					return a === b ? 0 : a < b ? -1: 1
-				});
-			 	if (this.c.indexOf(this.c[0]) >-1){
-			 		
-			 	}
-			}
-		}
+		return lowest;
 	}
-};
-	var newMatch = new MatchMaker();
+
 	var friend = new NewFriend();
 	var photo = new GetPhoto();
 
@@ -57,31 +32,64 @@ function MatchMaker(){
 			type: "GET",
 			url: "http://localhost:8000/api/friends"
 		}).done(function(results){
-			selectionsArray = [];
+			var selectionsArray = [];
+			var nameArray = [];
+			var photoArray = [];
+			var c = []
+			var count = 0;
+			var sum = 0;
 			var currentUserData = gettingLast(results);
 			var allOtherData = removingLast(results);
+			console.log(currentUserData.selections);
 
-		for(var i = 0; i < allOtherData.length; i++){
-			selectionsArray.push(allOtherData[i].selections); 
+			for(var i = 0; i < allOtherData.length; i++){
+				selectionsArray.push(allOtherData[i].selections); 
+				nameArray.push(allOtherData[i].name);
+				photoArray.push(allOtherData[i].photo)
+			}
+			function index(){
+			if (c.length < allOtherData.length){
+				for (var i = 0; i < currentUserData.selections.length; i++){
+				 	sum += ((currentUserData.selections[i] - selectionsArray[count][i])*-1);
+			}
+			c.push(sum);
+			nameArray.push(allOtherData[count].name);
+			photoArray.push(allOtherData[count].photo);
+			sum = 0;
+			count++;
+			index();
+			} else {
+				for(var j = 0; j < c.length; j++) {
+					if (c[j] < 0){
+					c[j] = c[j]*-1;
+					}
+				}
+				if (c.length === 1) {
+					alert("You are officially the first member. Your match will come");
+					} else {
+
+					console.log(selectionsArray[indexOfSmallest(c)]);
+
+					var matchDiv = $('<div>');
+
+					var matchP = $('<p>');
+					matchP.text(nameArray[indexOfSmallest(c)]);
+					matchDiv.append(matchP);
+
+					var matchImg = $('<img>');
+					matchImg.attr('src', photoArray[indexOfSmallest(c)]).height(300).width(300);
+					matchDiv.append(matchImg);
+
+					$('.modal-body').append(matchDiv);
+					
+					$('#submitButton').hide();
+					$('#submitHome').show();
+
+				}
+			}
 		}
-
-		newMatch.index(currentUserData.selections, selectionsArray);
-
-			var matchDiv = $('<div>');
-
-			var matchP = $('<p>');
-			matchP.text(currentUserData.name);
-			matchDiv.append(matchP);
-
-			var matchImg = $('<img>');
-			matchImg.attr('src', currentUserData.photo).height(300).width(300);
-			matchDiv.append(matchImg);
-
-			$('.modal-body').append(matchDiv);
-			
-			$('#submitButton').hide();
-			$('#submitHome').show();
-		});
+		index();
+	})
 });
 
 	function gettingLast(array){

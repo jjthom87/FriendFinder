@@ -1,18 +1,42 @@
-var a = [1,2,3,1,2,3];
-var b = [[4,3,2,3,2,3],[5,4,7,9,9,1],[1,5,4,3,2,1],[4,5,1,2,3,4],[1,1,1,1,1,1]]
+var a = [6,6,6,6,6,6];
+var d = [{name: 'john',
+		selections: [5,5,5,5,5,5]
+		},{name: 'rob',
+		selections: [6,6,5,6,6,6]
+	    },{name: 'bill',
+	    selections: [6,6,6,6,6,6]
+		},{name: 'jack',
+		selections: [6,6,6,6,6,6]
+		},{name: 'jay',
+		selections: [1,1,1,1,1,1],
+		},{name: 'joe',
+		selections: [2,2,2,2,2,2]
+		},{name: 'rick',
+		selections: [3,3,3,3,3,3]}]
+
+function indexOfSmallest(a){
+	var lowest = 0;
+	for (var i = 1; i < a.length; i++){
+		if(a[i] < a[lowest]) lowest = i;
+	}
+	return lowest;
+}
 
 function MatchMaker(){
 	this.c = [];
+	this.f = [];
 	this.count = 0;
 	this.sum = 0;
-	this.index = function(array,arrays){
-		if (this.c.length < arrays.length){
-			for (var i = 0; i < array.length; i++){
-				this.sum += (array[i] - (arrays[this.count][i]));
+	this.index = function(){
+		if (this.c.length < d.length){
+			for (var i = 0; i < a.length; i++){
+			 	this.sum += ((a[i] - d[this.count].selections[i])*-1);
 		}
 		this.c.push(this.sum);
+		this.f.push(d[this.count].name)
+		this.sum = 0;
 		this.count++;
-		this.index(array,arrays);
+		this.index();
 		} else {
 			for(var j = 0; j < this.c.length; j++) {
 				if (this.c[j] < 0){
@@ -22,17 +46,13 @@ function MatchMaker(){
 			if (this.c.length === 1) {
 				alert("You are officially the first member. Your match will come");
 				} else {
-				this.c.sort(function(a,b){
-					return a === b ? 0 : a < b ? -1: 1
-				});
-			return this.c[0];
+				console.log(this.f[indexOfSmallest(this.c)]);
 			}
 		}
 	}
 }
 var newMatch = new MatchMaker();
-// newMatch.index(a,b);
+newMatch.index();
 
-module.exports['match'] = newMatch;
-
+// module.exports['match'] = newMatch;
 
