@@ -11,7 +11,7 @@ var friendArray = [];
 var app = express();
 
 //setting up the port that the server will be listening on
-var PORT = 8000;
+var PORT = 5000;
 
 //Sets up the express app to handle parsing
 app.use(bodyParser.json({limit: '50mb'}));
