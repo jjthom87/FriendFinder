@@ -22,8 +22,6 @@ var app = express();
 //setting up the port that the server will be listening on
 var PORT = 5000;
 
-app.use(express.static(__dirname + '/app'));
-
 //Sets up the express app to handle parsing
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({ 
@@ -71,10 +69,11 @@ app.post('/api/friends', function(req,res){
 	friendArray.push(newFriend);
 	res.json(newFriend);
 });
+
+app.use('/parse', api);
 //lets the server recognize the js files
 app.use(express.static('app'));
 
-app.use('/parse', api);
 //starts the server with the listening queue
 app.listen(PORT, function(){
 	console.log("Listening on port", PORT);
