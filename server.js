@@ -6,7 +6,7 @@ var fs = require('fs');
 var ParseServer = require('parse-server').ParseServer;
 
 var api = new ParseServer({
-	databaseURI: 'mongodb://localhost:27017/dev',
+	databaseURI: 'mongodb://localhost:27017',
 	cloud: 'server.js',
 	appId: 'jjthom87',
 	masterKey: 'ntho1mas',
