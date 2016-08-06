@@ -8,14 +8,6 @@ var fs = require('fs');
 //Sets up the the express app
 var app = express();
 
-// var api = new ParseServer({
-// 	databaseURI: 'mongodb://localhost/',
-// 	cloud: 'server.js',
-// 	appId: 'jjthom87',
-// 	masterKey: 'ntho1mas',
-// 	serverURL: 'https://localhost:5000/parse'
-// })
-
 //Where all of the post information is being pushed to
 var friendArray = [];
 
@@ -50,15 +42,9 @@ app.get('/api/friends', function(req,res){
 app.post('/api/friends', function(req,res){
 	var friendName = req.body.friend.name;
 	var friendImage = req.body.friend.image;
-	var friendStringNumbers = req.body.friend.selections;
+	var friendNumbers = req.body.friend.selections;
 	var friendPhoto = req.body.friend.photo;
-	var friendNumbers = stringToNumber(friendStringNumbers);
-	function stringToNumber(array){
-		for (var i = 0; i < array.length; i++) {
-			array[i] = parseInt(array[i]);
-		}
-		return array	
-	}
+
 	var newFriend = {
 	  	name: friendName,
 		image: friendImage,
