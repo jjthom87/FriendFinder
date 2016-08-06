@@ -1,2 +1,2 @@
-<?php include_once("app/public/home.html"); ?>
-<?php require_once("app/public/survey.html"); ?>
+<?php include_once("/"); ?>
+<?php include_once("/survey"); ?>
