@@ -3,24 +3,24 @@ var express = require ('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 var fs = require('fs');
-var ParseServer = require('parse-server').ParseServer;
+// var ParseServer = require('parse-server').ParseServer;
 
 //Sets up the the express app
 var app = express();
 
-var api = new ParseServer({
-	databaseURI: 'mongodb://localhost/',
-	cloud: 'server.js',
-	appId: 'jjthom87',
-	masterKey: 'ntho1mas',
-	serverURL: 'https://localhost:5000/parse'
-})
+// var api = new ParseServer({
+// 	databaseURI: 'mongodb://localhost/',
+// 	cloud: 'server.js',
+// 	appId: 'jjthom87',
+// 	masterKey: 'ntho1mas',
+// 	serverURL: 'https://localhost:5000/parse'
+// })
 
 //Where all of the post information is being pushed to
 var friendArray = [];
 
 //setting up the port that the server will be listening on
-var PORT = 5000;
+var PORT = process.env.PORT || 5000;
 
 //Sets up the express app to handle parsing
 app.use(bodyParser.json({limit: '50mb'}));
