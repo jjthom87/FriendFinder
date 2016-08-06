@@ -48,12 +48,12 @@ $(document).ready(function() {
 		//pushing the matched information to a pop-up modal
 		$('#myModal').modal();
 		//posting the submitted information to the server
-		$.post("http://localhost:8000/api/friends",{friend})
+		$.post("/api/friends",{friend})
 		//getting the posted information from server to display on html page and using the algorithm below to find the 
 		//closest match to the current users results. My favorite part is my use of recursion :)
 		$.ajax({
 			type: "GET",
-			url: "http://localhost:8000/api/friends"
+			url: "/api/friends"
 		}).done(function(results){
 			var selectionsArray = [];
 			var nameArray = [];
