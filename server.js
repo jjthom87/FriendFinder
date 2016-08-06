@@ -70,7 +70,7 @@ app.post('/api/friends', function(req,res){
 	res.json(newFriend);
 });
 
-app.use('/parse', api);
+// app.use('/parse', api);
 //lets the server recognize the js files
 app.use(express.static('app'));
 
