@@ -3,7 +3,7 @@ var express = require ('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 var fs = require('fs');
-var ParseServer = require('parse-server');
+var ParseServer = require('parse-server').ParseServer;
 
 var api = new ParseServer({
 	databaseURI: 'mongodb://localhost:27017/dev',
