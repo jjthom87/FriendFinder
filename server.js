@@ -22,6 +22,8 @@ var app = express();
 //setting up the port that the server will be listening on
 var PORT = 5000;
 
+app.use(express.static(__dirname + '/app'));
+
 //Sets up the express app to handle parsing
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({ 
