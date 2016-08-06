@@ -86,7 +86,7 @@ $(document).ready(function() {
 						c[j] = c[j]*-1;
 						}
 					}
-					if (c.length < 1) {
+					if (c.length < 0) {
 						alert("You are officially the first member. Your match will come");
 						} else {
 						var matchDiv = $('<div>');
