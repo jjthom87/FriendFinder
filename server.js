@@ -5,8 +5,11 @@ var path = require('path');
 var fs = require('fs');
 var ParseServer = require('parse-server').ParseServer;
 
+//Sets up the the express app
+var app = express();
+
 var api = new ParseServer({
-	databaseURI: 'mongodb://localhost:5000/dev',
+	databaseURI: 'mongodb://localhost:27017/dev',
 	cloud: 'server.js',
 	appId: 'jjthom87',
 	masterKey: 'ntho1mas',
@@ -15,9 +18,6 @@ var api = new ParseServer({
 
 //Where all of the post information is being pushed to
 var friendArray = [];
-
-//Sets up the the express app
-var app = express();
 
 //setting up the port that the server will be listening on
 var PORT = 5000;
