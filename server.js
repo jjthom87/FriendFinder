@@ -10,7 +10,7 @@ var api = new ParseServer({
 	cloud: 'server.js',
 	appId: 'jjthom87',
 	masterKey: 'ntho1mas',
-	serverURL: 'http://localhost:5000/parse'
+	serverURL: 'https://localhost:5000/parse'
 })
 
 //Where all of the post information is being pushed to
