@@ -1,2 +1,1 @@
-<?php require("app/public/home.html"); ?>
-<?php require("app/public/survey.html"); ?>
+<?php include_once("app/public/home.html"); ?>
