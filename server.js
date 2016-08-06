@@ -3,6 +3,15 @@ var express = require ('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 var fs = require('fs');
+var ParseServer = require('parse-server');
+
+var api = new ParseServer({
+	databaseURI: 'mongodb://localhost:27017/dev',
+	cloud: 'server.js',
+	appId: 'jjthom87',
+	masterKey: 'ntho1mas',
+	serverURL: 'http://localhost:5000/parse'
+})
 
 //Where all of the post information is being pushed to
 var friendArray = [];
@@ -62,6 +71,8 @@ app.post('/api/friends', function(req,res){
 });
 //lets the server recognize the js files
 app.use(express.static('app'));
+
+app.use('/parse', api);
 //starts the server with the listening queue
 app.listen(PORT, function(){
 	console.log("Listening on port", PORT);
