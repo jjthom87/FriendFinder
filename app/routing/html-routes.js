@@ -86,9 +86,7 @@ $(document).ready(function() {
 						c[j] = c[j]*-1;
 						}
 					}
-					if (c.length < 1) {
-						alert("You are officially the first member. Your match will come");
-						} else {
+					if (c.length > 0) {
 						var matchDiv = $('<div>');
 
 						var matchP = $('<p>');
@@ -103,7 +101,9 @@ $(document).ready(function() {
 						
 						$('#submitButton').hide();
 						$('#submitHome').show();
-						}
+						} else {
+						alert("You are officially the first member. Your match will come");
+						};
 				}
 			}
 			index();
