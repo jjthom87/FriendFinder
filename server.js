@@ -70,6 +70,7 @@ app.post('/api/friends', function(req,res){
 //lets the server recognize the js files
 app.use(express.static('app'));
 
+console.log(friendArray);
 //starts the server with the listening queue
 app.listen(PORT, function(){
 	console.log("Listening on port", PORT);
