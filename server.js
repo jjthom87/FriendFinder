@@ -13,12 +13,12 @@ var friendArray = [{
 	name: 'Joe',
 	image: '',
 	selections: [3,3,3,3,3,3,3,3,3,3],
-	photo: 'joe.jpg'
+	photo: '../joe.jpg'
 },{
 	name: 'Jamarcus',
 	image: '',
 	selections: [4,4,4,4,4,4,4,4,4,4],
-	photo: 'jamarcus,jpg'
+	photo: '../jamarcus.jpg'
 }];
 
 //setting up the port that the server will be listening on
