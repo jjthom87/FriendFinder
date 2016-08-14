@@ -101,9 +101,7 @@ $(document).ready(function() {
 						
 						$('#submitButton').hide();
 						$('#submitHome').show();
-						} else {
-						alert("You are officially the first member. Your match will come");
-						};
+						}
 				}
 			}
 			index();
