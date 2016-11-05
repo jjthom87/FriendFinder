@@ -50,6 +50,7 @@ app.get('/api/friends', function(req,res){
 
 //getting the information from the form on the page, and then combining the information that i want sent back to the page.
 app.post('/api/friends', function(req,res){
+	console.log("this is the req.body " + req.body);
 	var friendName = req.body.friend.name;
 	var friendImage = req.body.friend.image;
 	var friendNumbers = req.body.friend.selections;

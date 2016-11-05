@@ -55,6 +55,7 @@ $(document).ready(function() {
 			type: "GET",
 			url: "/api/friends"
 		}).done(function(results){
+			console.log(results);
 			var selectionsArray = [];
 			var nameArray = [];
 			var photoArray = [];
